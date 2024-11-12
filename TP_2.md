@@ -14,6 +14,17 @@ done :)
 - [2. Users](#2-users)
   - [A. Nouveau user](#a-nouveau-user)
   - [B. Infos enregistrées par le système](#b-infos-enregistrées-par-le-système)
+  - [C. Hint sur la ligne de commande](#c-hint-sur-la-ligne-de-commande)
+  - [D. Connexion sur le nouvel utilisateur](#d-connexion-sur-le-nouvel-utilisateur)
+- [III. Programmes et paquets](#iii-programmes-et-paquets)
+  - [Sommaire](#sommaire)
+- [1. Programmes et processus](#1-programmes-et-processus)
+  - [A. Run then kill](#a-run-then-kill)
+  - [B. Tâche de fond](#b-tâche-de-fond)
+  - [C. Find paths](#c-find-paths)
+  - [D. La variable PATH](#d-la-variable-path)
+- [2. Paquets](#2-paquets)
+- [IV. Poupée russe](#iv-poupée-russe)
 
 # 1. Fichiers
 
@@ -887,28 +898,159 @@ marmotte
 🌞 Prouver que cet utilisateur a été créé
 
 ```bash
-
+fata@debian:/home$ su
+Password:
+root@debian:/home# sudo cat /etc/passwd | grep marmotte
+marmotte:x:1001:1001::/home/papier_alu:/bin/sh
 ```
+
+🌞 Déterminer le hash du password de l'utilisateur marmotte
+
+```bash
+root@debian:/home# sudo cat /etc/shadow | grep marmotte
+marmotte:$y$j9T$jFWVYI6DlmJ.2swl7Asij1$0cfBRoAtPY3GQvy0CIE6srBkqsZYpp3Do9SR843JhO/:20039:0:99999:7:::
+```
+## C. Hint sur la ligne de commande
+
+## D. Connexion sur le nouvel utilisateur
+
+🌞 **Tapez une commande pour vous déconnecter : fermer votre session utilisateur**
+
+```bash
+root@debian:/home# exit
+exit
+fata@debian:/home$
+```
+🌞 **Assurez-vous que vous pouvez vous connecter en tant que l'utilisateur `marmotte`**
+
+```bash
+fata@debian:/home$ su - marmotte
+Password:
+$ whoami
+marmotte
+$
+```
+# III. Programmes et paquets
+
+## Sommaire
+
+- [TP2 : Le terminal vous a déjà manqué non](#tp2--le-terminal-vous-a-déjà-manqué-non)
+- [I. Gameshell](#i-gameshell)
+- [II. Files and users](#ii-files-and-users)
+- [1. Fichiers](#1-fichiers)
+  - [A. Find me](#a-find-me)
+- [2. Users](#2-users)
+  - [A. Nouveau user](#a-nouveau-user)
+  - [B. Infos enregistrées par le système](#b-infos-enregistrées-par-le-système)
+  - [C. Hint sur la ligne de commande](#c-hint-sur-la-ligne-de-commande)
+  - [D. Connexion sur le nouvel utilisateur](#d-connexion-sur-le-nouvel-utilisateur)
+- [III. Programmes et paquets](#iii-programmes-et-paquets)
+  - [Sommaire](#sommaire)
+- [1. Programmes et processus](#1-programmes-et-processus)
+  - [A. Run then kill](#a-run-then-kill)
+  - [B. Tâche de fond](#b-tâche-de-fond)
+  - [C. Find paths](#c-find-paths)
+  - [D. La variable PATH](#d-la-variable-path)
+- [2. Paquets](#2-paquets)
+- [IV. Poupée russe](#iv-poupée-russe)
+
+# 1. Programmes et processus
+
+## A. Run then kill
+
+🌞 **Lancer un processus `sleep`**
+
+```bash
+fata@debian:/home$ sleep 1000
+
+fata@debian:~$ ps
+    PID TTY          TIME CMD
+  19971 pts/2    00:00:00 bash
+  19998 pts/2    00:00:00 ps
+
+  fata@debian:~$ ps -fe | grep sleep
+fata       19949   19009  0 19:14 pts/1    00:00:00 sleep 1000
+fata       20001   19971  0 19:16 pts/2    00:00:00 grep sleep
+```
+🌞 **Terminez le processus `sleep` depuis le deuxième terminal**
+
+```bash
+fata@debian:/home$ kill
+```
+## B. Tâche de fond
+
+🌞 **Lancer un nouveau processus `sleep`, mais en tâche de fond**
+
+```bash
+fata@debian:~$ sleep 1000 &
+[1] 20038
+```
+
+🌞 **Visualisez la commande en tâche de fond**
 
 ```bash
 
 ```
 
-```bash
+## C. Find paths
 
-```
+🌞 **Trouver le chemin où est stocké le programme `sleep`**
 
-```bash
-
-```
 
 ```bash
 
 ```
 
+🌞 Tant qu'on est à chercher des chemins : **trouver les chemins vers tous les fichiers qui s'appellent `.bashrc`**
+
 ```bash
 
 ```
 
-- [**Partie III** : Process & Packages](./processes_packages.md)
-- [**Partie IV** : Poupée russe](./matryoshka.md)
+## D. La variable PATH
+
+🌞 **Vérifier que**
+
+```bash
+
+```
+
+# 2. Paquets
+
+🌞 **Installer le paquet `firefox`**
+
+```bash
+
+```
+
+🌞 **Utiliser une commande pour lancer Firefox**
+
+```bash
+
+```
+
+🌞 **Mais aussi déterminer...**
+
+```bash
+
+```
+
+# IV. Poupée russe
+
+🌞 **Récupérer le fichier `meow`**
+
+```bash
+
+```
+
+🌞 **Trouver le dossier `dawa/`**
+
+```bash
+
+```
+
+🌞 **Dans le dossier `dawa/`, déterminer le chemin vers**
+
+```bash
+
+```
