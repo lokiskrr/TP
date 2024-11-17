@@ -889,7 +889,7 @@ PS C:\Users\fatma> Get-Process | Select-Object Id, ProcessName, @{Name='UserName
  1364 WUDFHost
 ```
 
-🌞 **Sur un fichier random qui se trouve dans votre dossier 
+🌞 **Sur un fichier random qui se trouve dans votre dossier**
 ```powershell
 `Téléchargements/`**
 PS C:\Users\fatma> $path = "$env:USERPROFILE\Downloads\DiscordSetup.exe"
