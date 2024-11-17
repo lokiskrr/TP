@@ -17,7 +17,6 @@ done :)
   - [C. Hint sur la ligne de commande](#c-hint-sur-la-ligne-de-commande)
   - [D. Connexion sur le nouvel utilisateur](#d-connexion-sur-le-nouvel-utilisateur)
 - [III. Programmes et paquets](#iii-programmes-et-paquets)
-  - [Sommaire](#sommaire)
 - [1. Programmes et processus](#1-programmes-et-processus)
   - [A. Run then kill](#a-run-then-kill)
   - [B. Tâche de fond](#b-tâche-de-fond)
@@ -931,28 +930,6 @@ marmotte
 $
 ```
 # III. Programmes et paquets
-
-## Sommaire
-
-- [TP2 : Le terminal vous a déjà manqué non](#tp2--le-terminal-vous-a-déjà-manqué-non)
-- [I. Gameshell](#i-gameshell)
-- [II. Files and users](#ii-files-and-users)
-- [1. Fichiers](#1-fichiers)
-  - [A. Find me](#a-find-me)
-- [2. Users](#2-users)
-  - [A. Nouveau user](#a-nouveau-user)
-  - [B. Infos enregistrées par le système](#b-infos-enregistrées-par-le-système)
-  - [C. Hint sur la ligne de commande](#c-hint-sur-la-ligne-de-commande)
-  - [D. Connexion sur le nouvel utilisateur](#d-connexion-sur-le-nouvel-utilisateur)
-- [III. Programmes et paquets](#iii-programmes-et-paquets)
-  - [Sommaire](#sommaire)
-- [1. Programmes et processus](#1-programmes-et-processus)
-  - [A. Run then kill](#a-run-then-kill)
-  - [B. Tâche de fond](#b-tâche-de-fond)
-  - [C. Find paths](#c-find-paths)
-  - [D. La variable PATH](#d-la-variable-path)
-- [2. Paquets](#2-paquets)
-- [IV. Poupée russe](#iv-poupée-russe)
 
 # 1. Programmes et processus
 
