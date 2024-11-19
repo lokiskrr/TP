@@ -938,21 +938,16 @@ $
 🌞 **Lancer un processus `sleep`**
 
 ```bash
-fata@debian:/home$ sleep 1000
-
-fata@debian:~$ ps
-    PID TTY          TIME CMD
-  19971 pts/2    00:00:00 bash
-  19998 pts/2    00:00:00 ps
-
-  fata@debian:~$ ps -fe | grep sleep
-fata       19949   19009  0 19:14 pts/1    00:00:00 sleep 1000
-fata       20001   19971  0 19:16 pts/2    00:00:00 grep sleep
+fata@debian:~$ sleep 1000
 ```
 🌞 **Terminez le processus `sleep` depuis le deuxième terminal**
 
 ```bash
-fata@debian:/home$ kill
+fata@debian:~$ ps -fe | grep sleep
+fata        6329    6278  0 17:36 pts/1    00:00:00 sleep 1000
+fata        6378    6361  0 17:37 pts/2    00:00:00 grep sleep
+
+fata@debian:~$ kill
 ```
 ## B. Tâche de fond
 
@@ -960,28 +955,51 @@ fata@debian:/home$ kill
 
 ```bash
 fata@debian:~$ sleep 1000 &
-[1] 20038
+[1] 6541
 ```
 
 🌞 **Visualisez la commande en tâche de fond**
 
 ```bash
-
+fata@debian:~$ ps -fe | grep sleep
+fata        6541    6503  0 17:40 pts/1    00:00:00 sleep 1000
+fata        6543    6503  0 17:41 pts/1    00:00:00 grep sleep
 ```
+
+Le PID : 6541
 
 ## C. Find paths
 
 🌞 **Trouver le chemin où est stocké le programme `sleep`**
 
-
 ```bash
-
+fata@debian:~$ su - root
+Password:
+root@debian:~# find / -name "sleep"
+find: ‘/run/user/1000/doc’: Permission denied
+find: ‘/run/user/1000/gvfs’: Permission denied
+find: ‘/run/user/1001/doc’: Permission denied
+find: ‘/run/user/1001/gvfs’: Permission denied
+/usr/bin/sleep
+/usr/lib/klibc/bin/sleep
 ```
 
 🌞 Tant qu'on est à chercher des chemins : **trouver les chemins vers tous les fichiers qui s'appellent `.bashrc`**
 
 ```bash
-
+root@debian:~# find / -name "*.bashrc"
+find: ‘/run/user/1000/doc’: Permission denied
+find: ‘/run/user/1000/gvfs’: Permission denied
+find: ‘/run/user/1001/doc’: Permission denied
+find: ‘/run/user/1001/gvfs’: Permission denied
+/root/.bashrc
+/home/papier_alu/.bashrc
+/home/fata/.bashrc
+/usr/share/doc/adduser/examples/adduser.local.conf.examples/bash.bashrc
+/usr/share/doc/adduser/examples/adduser.local.conf.examples/skel/dot.bashrc
+/usr/share/base-files/dot.bashrc
+/etc/bash.bashrc
+/etc/skel/.bashrc
 ```
 
 ## D. La variable PATH
@@ -989,7 +1007,44 @@ fata@debian:~$ sleep 1000 &
 🌞 **Vérifier que**
 
 ```bash
+root@debian:~# find / -name "sleep"
+find: ‘/run/user/1000/doc’: Permission denied
+find: ‘/run/user/1000/gvfs’: Permission denied
+find: ‘/run/user/1001/doc’: Permission denied
+find: ‘/run/user/1001/gvfs’: Permission denied
+/usr/bin/sleep
+/usr/lib/klibc/bin/sleep
+root@debian:~# find / -name "ssh"
+find: ‘/run/user/1000/doc’: Permission denied
+find: ‘/run/user/1000/gvfs’: Permission denied
+/run/user/1000/keyring/ssh
+/run/user/1000/gcr/ssh
+find: ‘/run/user/1001/doc’: Permission denied
+find: ‘/run/user/1001/gvfs’: Permission denied
+/run/user/1001/keyring/ssh
+/run/user/1001/gcr/ssh
+/usr/share/runit/meta/ssh
+/usr/share/bash-completion/completions/ssh
+/usr/bin/ssh
+/usr/lib/apt/methods/ssh
+/etc/runit/runsvdir/default/ssh
+/etc/default/ssh
+/etc/sv/ssh
+/etc/init.d/ssh
+/etc/ssh
+/var/log/runit/ssh
+root@debian:~# find / -name "ping"
+find: ‘/run/user/1000/doc’: Permission denied
+find: ‘/run/user/1000/gvfs’: Permission denied
+find: ‘/run/user/1001/doc’: Permission denied
+find: ‘/run/user/1001/gvfs’: Permission denied
+/usr/share/bash-completion/completions/ping
+/usr/bin/ping
+```
 
+```bash 
+root@debian:~# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ```
 
 # 2. Paquets
@@ -997,19 +1052,58 @@ fata@debian:~$ sleep 1000 &
 🌞 **Installer le paquet `firefox`**
 
 ```bash
-
+root@debian:~# apt install git
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  git-man liberror-perl patch
+Suggested packages:
+  git-daemon-run | git-daemon-sysvinit git-doc git-email
+  git-gui gitk gitweb git-cvs git-mediawiki git-svn ed
+  diffutils-doc
+The following NEW packages will be installed:
+  git git-man liberror-perl patch
+0 upgraded, 4 newly installed, 0 to remove and 73 not upgraded.
+Need to get 9,467 kB of archives.
+After this operation, 48.5 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://deb.debian.org/debian bookworm/main amd64 liberror-perl all 0.17029-2 [29.0 kB]
+Get:2 http://deb.debian.org/debian bookworm/main amd64 git-man all 1:2.39.5-0+deb12u1 [2,054 kB]
+Get:3 http://deb.debian.org/debian bookworm/main amd64 git amd64 1:2.39.5-0+deb12u1 [7,256 kB]
+Get:4 http://deb.debian.org/debian bookworm/main amd64 patch amd64 2.7.6-7 [128 kB]
+Fetched 9,467 kB in 1s (18.6 MB/s)
+Selecting previously unselected package liberror-perl.
+(Reading database ... 151590 files and directories currently installed.)
+Preparing to unpack .../liberror-perl_0.17029-2_all.deb ...
+Unpacking liberror-perl (0.17029-2) ...
+Selecting previously unselected package git-man.
+Preparing to unpack .../git-man_1%3a2.39.5-0+deb12u1_all.deb ...
+Unpacking git-man (1:2.39.5-0+deb12u1) ...
+Selecting previously unselected package git.
+Preparing to unpack .../git_1%3a2.39.5-0+deb12u1_amd64.deb ...
+Unpacking git (1:2.39.5-0+deb12u1) ...
+Selecting previously unselected package patch.
+Preparing to unpack .../patch_2.7.6-7_amd64.deb ...
+Unpacking patch (2.7.6-7) ...
+Setting up liberror-perl (0.17029-2) ...
+Setting up patch (2.7.6-7) ...
+Setting up git-man (1:2.39.5-0+deb12u1) ...
+Setting up git (1:2.39.5-0+deb12u1) ...
+Processing triggers for man-db (2.11.2-2) ...
 ```
 
 🌞 **Utiliser une commande pour lancer Firefox**
 
 ```bash
-
+root@debian:~# firefox
+Error: no DISPLAY environment variable specified
 ```
 
 🌞 **Mais aussi déterminer...**
 
 ```bash
-
+ ???? not working :(
 ```
 
 # IV. Poupée russe
@@ -1017,13 +1111,47 @@ fata@debian:~$ sleep 1000 &
 🌞 **Récupérer le fichier `meow`**
 
 ```bash
+root@debian:~# wget https://gitlab.com/it4lik/b1-os/-/raw/main/tp/2/meow
+--2024-11-11 16:57:35--  https://gitlab.com/it4lik/b1-os/-/raw/main/tp/2/meow
+--2024-11-19 17:53:39--  https://gitlab.com/it4lik/b1-os/-/raw/main/tp/2/meow
+Resolving gitlab.com (gitlab.com)... 172.65.251.78, 2606:4700:90:0:f22e:fbec:5bed:a9b9
+Connecting to gitlab.com (gitlab.com)|172.65.251.78|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 18016947 (17M) [application/octet-stream]
+Saving to: ‘meow’
 
+meow            100%[=======>]  17.18M  22.3MB/s    in 0.8s
+
+2024-11-19 17:53:40 (22.3 MB/s) - ‘meow’ saved [18016947/18016947]
+
+-bash: --2024-11-11: command not found
 ```
 
 🌞 **Trouver le dossier `dawa/`**
 
 ```bash
-
+root@debian:~# file meow
+meow: Zip archive data, at least v2.0 to extract, compression method=deflate
+root@debian:~# mv meow meow.zip
+root@debian:~# unzip meow.zip
+Archive:  meow.zip
+  inflating: meow
+root@debian:~# ls dawa/
+ls: cannot access 'dawa/': No such file or directory
+root@debian:~# file meow.zip
+meow.zip: Zip archive data, at least v2.0 to extract, compression method=deflate
+root@debian:~# ls
+meow  meow.zip
+root@debian:~# file meow
+meow: XZ compressed data, checksum CRC64
+root@debian:~# mv meow meow.xz
+root@debian:~# xz -d meow.xz
+root@debian:~# file meow
+meow: bzip2 compressed data, block size = 900k
+root@debian:~# mv meow meow.bz2
+root@debian:~# bunzip2 meow.bz2
+root@debian:~# file meow
+meow: RAR archive data, v5
 ```
 
 🌞 **Dans le dossier `dawa/`, déterminer le chemin vers**
