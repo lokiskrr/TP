@@ -154,7 +154,13 @@ hello1: ELF 32-bit LSB pie executable, Intel 80386, version 1 (SYSV), dynamicall
 🌞 **Parmi les *librairies* appelées par *hello2*, déterminer le type du fichier nommé `libc.so.X`**
 
 ```bash 
+fata@debian:~/work$ ldd ./hello2
+        linux-gate.so.1 (0xf7f37000)
+        libc.so.6 => /lib32/libc.so.6 (0xf7cf1000)
+        /lib/ld-linux.so.2 (0xf7f39000) 
 
+
+Type de fichier : lib.so.6
 ```
 
 ## 3. Compilation statique
@@ -162,13 +168,21 @@ hello1: ELF 32-bit LSB pie executable, Intel 80386, version 1 (SYSV), dynamicall
 🌞 **Affichez le type des fichiers `hello2` et `hello3`**
 
 ```bash 
+fata@debian:~/work$ file ./hello2
+./hello2: ELF 32-bit LSB pie executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, BuildID[sha1]=052622b155dba221353280bad72c104d0f0337de, for GNU/Linux 3.2.0, with debug_info, not stripped
 
+fata@debian:~/work$ file ./hello3
+./hello3: ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, BuildID[sha1]=3d2ea056ab3ccf8a9462794c5b5cf9a1b88f6822, for GNU/Linux 3.2.0, with debug_info, not stripped
 ```
 
 🌞 **Affichez leurs tailles**
 
 ```bash 
+fata@debian:~/work$ du -h ./hello2
+16K     ./hello2
 
+fata@debian:~/work$ du -h ./hello3
+728K    ./hello3
 ```
 
 ## 4. Compilation cross-platform
@@ -176,19 +190,81 @@ hello1: ELF 32-bit LSB pie executable, Intel 80386, version 1 (SYSV), dynamicall
 🌞 **Affichez l'*architecture* de votre *CPU***
 
 ```bash 
-
+fata@debian:~/work$ lscpu
+Architecture:             x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          39 bits physical, 48 bits virtual
+  Byte Order:             Little Endian
+CPU(s):                   1
+  On-line CPU(s) list:    0
+Vendor ID:                GenuineIntel
+  Model name:             Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz
+    CPU family:           6
+    Model:                142
+    Thread(s) per core:   1
+    Core(s) per socket:   1
+    Socket(s):            1
+    Stepping:             12
+    BogoMIPS:             3599.99
+    Flags:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse s
+                          se2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_f
+                          req pni pclmulqdq monitor ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx
+                          f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single fsgsbase bmi1 avx2 bmi2 invpci
+                          d rdseed adx clflushopt arat md_clear flush_l1d arch_capabilities
+Virtualization features:
+  Hypervisor vendor:      KVM
+  Virtualization type:    full
+Caches (sum of all):
+  L1d:                    32 KiB (1 instance)
+  L1i:                    32 KiB (1 instance)
+  L2:                     256 KiB (1 instance)
+  L3:                     6 MiB (1 instance)
+NUMA:
+  NUMA node(s):           1
+  NUMA node0 CPU(s):      0
+Vulnerabilities:
+  Gather data sampling:   Unknown: Dependent on hypervisor status
+  Itlb multihit:          KVM: Mitigation: VMX unsupported
+  L1tf:                   Not affected
+  Mds:                    Not affected
+  Meltdown:               Not affected
+  Mmio stale data:        Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown
+  Reg file data sampling: Not affected
+  Retbleed:               Vulnerable
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Vulnerable
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Retpoline
+  Srbds:                  Unknown: Dependent on hypervisor status
+  Tsx async abort:        Not affected
 ```
 
 🌞 **Vérifiez que vous avez la commande `x86_64-linux-gnu-gcc`**
 
 ```bash 
-
+fata@debian:~/work$ which x86_64-linux-gnu-gcc
+/usr/bin/x86_64-linux-gnu-gcc
 ```
 
 🌞 **Compilez votre fichier `hello3.c` dans un fichier cible nommé `hello4` vers une autre *architecture* que la vôtre**
 
 ```bash 
+fata@debian:/$ su - root
+Password:
+root@debian:~# sudo apt-get install gcc-arm-linux-gnueabihf
 
+root@debian:~# which arm-linux-gnueabihf-gcc
+/usr/bin/arm-linux-gnueabihf-gcc
+
+fata@debian:~$ ls
+ Desktop     Downloads   Music      Public     'udo systemctl list-units -t service -a'   work
+ Documents   gameshell   Pictures   Templates   Videos
+fata@debian:~$ work
+-bash: work: command not found
+fata@debian:~$ cd work/
+fata@debian:~/work$ arm-linux-gnueabihf-gcc -o hello4 hello3.c
+fata@debian:~/work$ ls
+hello1  hello1.c  hello2  hello2.c  hello3  hello3.c  hello4
 ```
 
 🌞 **[Désassemblez](../../cours/memo/glossary.md#désassembler) `hello3` et `hello4` à l'aide d'`objdump`**
